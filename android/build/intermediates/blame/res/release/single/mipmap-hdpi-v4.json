@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/Users/jessica/Documents/pocket/node_modules/react-native-baidu-map/android/build/intermediates/res/merged/release/mipmap-hdpi-v4/icon_center_point.png",
+        "source": "/Users/jessica/Documents/pocket/node_modules/react-native-baidu-map/android/src/main/res/mipmap-hdpi/icon_center_point.png"
+    },
+    {
+        "merged": "/Users/jessica/Documents/pocket/node_modules/react-native-baidu-map/android/build/intermediates/res/merged/release/mipmap-hdpi-v4/baidu_noone.png",
+        "source": "/Users/jessica/Documents/pocket/node_modules/react-native-baidu-map/android/src/main/res/mipmap-hdpi/baidu_noone.png"
+    },
+    {
+        "merged": "/Users/jessica/Documents/pocket/node_modules/react-native-baidu-map/android/build/intermediates/res/merged/release/mipmap-hdpi-v4/icon_gcoding.png",
+        "source": "/Users/jessica/Documents/pocket/node_modules/react-native-baidu-map/android/src/main/res/mipmap-hdpi/icon_gcoding.png"
+    },
+    {
+        "merged": "/Users/jessica/Documents/pocket/node_modules/react-native-baidu-map/android/build/intermediates/res/merged/release/mipmap-hdpi-v4/baidu_my.png",
+        "source": "/Users/jessica/Documents/pocket/node_modules/react-native-baidu-map/android/src/main/res/mipmap-hdpi/baidu_my.png"
+    },
+    {
+        "merged": "/Users/jessica/Documents/pocket/node_modules/react-native-baidu-map/android/build/intermediates/res/merged/release/mipmap-hdpi-v4/baidu_someone.png",
+        "source": "/Users/jessica/Documents/pocket/node_modules/react-native-baidu-map/android/src/main/res/mipmap-hdpi/baidu_someone.png"
+    }
+]
