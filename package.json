@@ -2,88 +2,78 @@
   "_args": [
     [
       {
-        "raw": "rn-pocket-baidu-map@^0.4.8",
+        "raw": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
         "scope": null,
-        "escapedName": "rn-pocket-baidu-map",
-        "name": "rn-pocket-baidu-map",
-        "rawSpec": "^0.4.8",
-        "spec": ">=0.4.8 <0.5.0",
-        "type": "range"
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+        "spec": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:luojuan822/rn-pocket-baidu-map.git",
+          "sshUrl": "git+ssh://git@github.com/luojuan822/rn-pocket-baidu-map.git",
+          "httpsUrl": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+          "gitUrl": "git://github.com/luojuan822/rn-pocket-baidu-map.git",
+          "shortcut": "github:luojuan822/rn-pocket-baidu-map",
+          "directUrl": "https://raw.githubusercontent.com/luojuan822/rn-pocket-baidu-map/master/package.json"
+        }
       },
       "/Users/jessica/Documents/pocket"
     ]
   ],
-  "_from": "rn-pocket-baidu-map@>=0.4.8 <0.5.0",
-  "_id": "rn-pocket-baidu-map@0.4.8",
+  "_from": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+  "_id": "rn-pocket-baidu-map@1.0.0",
   "_inCache": true,
   "_installable": true,
   "_location": "/rn-pocket-baidu-map",
-  "_nodeVersion": "5.4.1",
-  "_npmOperationalInternal": {
-    "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/rn-pocket-baidu-map-0.4.8.tgz_1477671195521_0.3301605370361358"
-  },
-  "_npmUser": {
-    "name": "luojuan822",
-    "email": "luojuan822@163.com"
-  },
-  "_npmVersion": "3.3.12",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "rn-pocket-baidu-map@^0.4.8",
+    "raw": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
     "scope": null,
-    "escapedName": "rn-pocket-baidu-map",
-    "name": "rn-pocket-baidu-map",
-    "rawSpec": "^0.4.8",
-    "spec": ">=0.4.8 <0.5.0",
-    "type": "range"
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+    "spec": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:luojuan822/rn-pocket-baidu-map.git",
+      "sshUrl": "git+ssh://git@github.com/luojuan822/rn-pocket-baidu-map.git",
+      "httpsUrl": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+      "gitUrl": "git://github.com/luojuan822/rn-pocket-baidu-map.git",
+      "shortcut": "github:luojuan822/rn-pocket-baidu-map",
+      "directUrl": "https://raw.githubusercontent.com/luojuan822/rn-pocket-baidu-map/master/package.json"
+    }
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/rn-pocket-baidu-map/-/rn-pocket-baidu-map-0.4.8.tgz",
-  "_shasum": "658439224da17990367b221849d06f577673f6e8",
+  "_resolved": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git#97b03ef662ad2204c764f7206b43ee5299ade530",
+  "_shasum": "6cdd172c45a667c628df1f49f5696e531b5e904e",
   "_shrinkwrap": null,
-  "_spec": "rn-pocket-baidu-map@^0.4.8",
+  "_spec": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
   "_where": "/Users/jessica/Documents/pocket",
   "author": {
-    "name": "luojuan822"
+    "name": "@luojuan822"
   },
-  "bugs": {
-    "url": "https://github.com/luojuan822/rn-pocket-baidu-map/issues"
+  "dependencies": {
+    "invariant": "^2.1.0"
   },
-  "dependencies": {},
-  "description": "Baidu Map SDK modules and view for React Native(Android & IOS), support react native 0.30+.",
+  "description": "ping++ for react native",
   "devDependencies": {},
-  "directories": {},
-  "dist": {
-    "shasum": "658439224da17990367b221849d06f577673f6e8",
-    "tarball": "https://registry.npmjs.org/rn-pocket-baidu-map/-/rn-pocket-baidu-map-0.4.8.tgz"
-  },
-  "gitHead": "05ed3e7885fa469db15ffb17269b328366e61cd0",
-  "homepage": "https://github.com/luojuan822/rn-pocket-baidu-map#readme",
+  "gitHead": "97b03ef662ad2204c764f7206b43ee5299ade530",
   "keywords": [
-    "Baidu Map",
-    "React Native"
+    "react",
+    "react native",
+    "ping++"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "main": "index.js",
-  "maintainers": [
-    {
-      "name": "luojuan822",
-      "email": "tangyangjian@gmail.com"
-    }
-  ],
   "name": "rn-pocket-baidu-map",
   "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "version": "0.4.8"
+  "readme": "# rn-pocket-baidu-map\n\n安装：\n\n    npm install https://github.com/luojuan822/rn-pocket-baidu-map.git\n\nios 使用说明:\n\n1.将ios文件夹下的PingppSDK拖拽到项目文件夹(例如pocket)下,选择create groups,不copy\n\n2.将项目文件PingPayManager.h、PingPayManager.m文件拖拽到项目文件夹(例如pocket)下,选择create groups,不copy\n\n3.依赖 Frameworks\n\n    CFNetwork.framework\n    SystemConfiguration.framework\n    Security.framework\n    QuartzCore.framework\n    CoreTelephony.framework\n    CoreMotion.framework\n    libc++.tbd\n    libz.tbd\n    libsqlite3.0.tbd\n    libstdc++.tbd\n\n4.配置Build Settings下的Framework Search Paths(用于寻找AliPay.framework)和Library Search Paths(用于寻找.a的library)\n\nFramework Search Paths 设置\n\n    $(inherited)\n    $(PROJECT_DIR)/../node_modules/rn-pocket-baidu-map/ios/PingppSDK/Channels/Alipay\n\nLibrary Search Paths 设置\n\n    $(inherited)\n    $(PROJECT_DIR)/../node_modules/rn-pocket-baidu-map/ios/PingppSDK/Channels/Alipay\n    $(PROJECT_DIR)/../node_modules/rn-pocket-baidu-map/ios/PingppSDK/Dependencies/Network\n    $(PROJECT_DIR)/../node_modules/rn-pocket-baidu-map/ios/PingppSDK/Dependencies/WebView\n    $(PROJECT_DIR)/../node_modules/rn-pocket-baidu-map/ios/PingppSDK\n\n注意事项:\n\n为了用户操作完成后能够跳转回你的应用，请务必添加 URL Schemes：在 Xcode 中，选择你的工程设置项，选中 TARGETS 一栏，在 Info 标签栏的 URL Types 添加 URL Schemes，如果使用微信，填入微信平台上注册的应用程序 id（为 wx 开头的字符串）。如果不使用微信，则自定义，建议起名稍复杂一些，尽量避免与其他程序冲突。允许英文字母和数字，首字母必须是英文字母，不允许特殊字符\n",
+  "readmeFilename": "README.md",
+  "version": "1.0.0"
 }
