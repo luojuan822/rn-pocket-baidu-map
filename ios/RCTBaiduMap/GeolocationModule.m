@@ -88,6 +88,28 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     //[reverseGeoCodeSearchOption release];
 }
 
+RCT_EXPORT_METHOD(walkSearch:(NSString*)startName lat:(double)lat lng:(double)lng endName:(NSString*)endName endlat:(double)endlat endlng:(double)endlng ) {
+    BMKPlanNode* start = [[BMKPlanNode alloc] init];
+    start.name = startName;
+    start.pt = CLLocationCoordinate2DMake(lat, lng);
+    BMKPlanNode* end = [[BMKPlanNode alloc] init];
+    end.name = endName;
+    end.pt = CLLocationCoordinate2DMake(endlat, endlng);
+    
+    BMKWalkingRoutePlanOption *walkingRouteSearchOption = [[BMKWalkingRoutePlanOption alloc] init];
+    walkingRouteSearchOption.from = start;
+    walkingRouteSearchOption.to = end;
+    BOOL flag = [[self getBMKRouteSearch] walkingSearch:walkingRouteSearchOption];
+    if(flag)
+    {
+        NSLog(@"walk检索发送成功");
+    }
+    else
+    {
+        NSLog(@"walk检索发送失败");
+    }
+}
+
 -(BMKGeoCodeSearch *)getGeocodesearch{
     if(geoCodeSearch == nil) {
         geoCodeSearch = [[BMKGeoCodeSearch alloc]init];
@@ -188,6 +210,10 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
 
 -(RCTBaiduMapView *) getBaiduMapView {
     return [RCTBaiduMapViewManager getBaiduMapView];
+}
+
+-(BMKRouteSearch*) getBMKRouteSearch {
+    return [RCTBaiduMapViewManager getBMKRouteSearch];
 }
 
 @end

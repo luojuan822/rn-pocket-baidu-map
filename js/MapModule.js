@@ -13,6 +13,7 @@ import React, {
 import Geolocation from './Geolocation';
 
 const _module = NativeModules.BaiduMapModule;
+console.log("Native BaiduMapModule ++++", _module)
 
 export default {
   setMarker (lat, lng) {
@@ -46,5 +47,29 @@ export default {
   getCurrentPosition() {
     console.warn('This method was deprecated, please use Geolocation.getCurrentPosition instead');
     return Geolocation.getCurrentPosition();
+  },
+  walkSearch(startName, lat, lng, endName, endlat, endlng) {
+  	_module.walkSearch(startName, lat, lng, endName, endlat, endlng);
+  },
+  busSearch(startName, lat, lng, endName, endlat, endlng) {
+    _module.busSearch(startName, lat, lng, endName, endlat, endlng);
+  },
+  driveSearch(startName, lat, lng, endName, endlat, endlng) {
+    _module.driveSearch(startName, lat, lng, endName, endlat, endlng);
+  },
+  allSearch(startName, lat, lng, endName, endlat, endlng) {
+    _module.allSearch(startName, lat, lng, endName, endlat, endlng);
+  },
+  drawDriving() {
+  	_module.drawDriving();
+  },
+  drawBus() {
+  	_module.drawBus();
+  },
+  drawWalking() {
+  	_module.drawWalking();
+  },
+  setEnableLoc(enable) {
+    _module.setEnableLoc(enable);
   }
 };

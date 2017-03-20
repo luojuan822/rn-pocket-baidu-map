@@ -1,23 +1,84 @@
 {
-  "name": "rn-pocket-baidu-map",
-  "version": "1.0.0",
+  "_args": [
+    [
+      {
+        "raw": "rn-pocket-baidu-map@git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+        "scope": null,
+        "escapedName": "rn-pocket-baidu-map",
+        "name": "rn-pocket-baidu-map",
+        "rawSpec": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+        "spec": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:luojuan822/rn-pocket-baidu-map.git",
+          "sshUrl": "git+ssh://git@github.com/luojuan822/rn-pocket-baidu-map.git",
+          "httpsUrl": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+          "gitUrl": "git://github.com/luojuan822/rn-pocket-baidu-map.git",
+          "shortcut": "github:luojuan822/rn-pocket-baidu-map",
+          "directUrl": "https://raw.githubusercontent.com/luojuan822/rn-pocket-baidu-map/master/package.json"
+        }
+      },
+      "/Users/jessica/Documents/pocket"
+    ]
+  ],
+  "_from": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+  "_id": "rn-pocket-baidu-map@1.0.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/rn-pocket-baidu-map",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "rn-pocket-baidu-map@git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+    "scope": null,
+    "escapedName": "rn-pocket-baidu-map",
+    "name": "rn-pocket-baidu-map",
+    "rawSpec": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+    "spec": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:luojuan822/rn-pocket-baidu-map.git",
+      "sshUrl": "git+ssh://git@github.com/luojuan822/rn-pocket-baidu-map.git",
+      "httpsUrl": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+      "gitUrl": "git://github.com/luojuan822/rn-pocket-baidu-map.git",
+      "shortcut": "github:luojuan822/rn-pocket-baidu-map",
+      "directUrl": "https://raw.githubusercontent.com/luojuan822/rn-pocket-baidu-map/master/package.json"
+    }
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git#0d667076dbb6f1e3914056b95e27aabea31e6331",
+  "_shasum": "528ea944c65fb9ca5e4c01b3f4c052f4e91961ad",
+  "_shrinkwrap": null,
+  "_spec": "rn-pocket-baidu-map@git+https://github.com/luojuan822/rn-pocket-baidu-map.git",
+  "_where": "/Users/jessica/Documents/pocket",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/luojuan822/rn-pocket-baidu-map/issues"
+  },
+  "dependencies": {},
   "description": "baidu map for react native",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git"
-  },
+  "devDependencies": {},
+  "gitHead": "0d667076dbb6f1e3914056b95e27aabea31e6331",
+  "homepage": "https://github.com/luojuan822/rn-pocket-baidu-map#readme",
   "keywords": [
     "reactnative",
     "baidumap"
   ],
-  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/luojuan822/rn-pocket-baidu-map/issues"
+  "main": "index.js",
+  "name": "rn-pocket-baidu-map",
+  "optionalDependencies": {},
+  "readme": "# react-native-baidu-map [![npm version](https://img.shields.io/npm/v/react-native-baidu-map.svg?style=flat)](https://www.npmjs.com/package/react-native-baidu-map)\n\nBaidu Map SDK modules and view for React Native(Android & IOS), support react native 0.30+\n\n百度地图 React Native 模块，支持 react native 0.30+\n\n![Android](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/android.jpg)\n![IOS](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/ios.jpg)\n\n### Install 安装\n    npm install react-native-baidu-map --save\n### Import 导入\n\n#### Android Studio\n- settings.gradle `\ninclude ':react-native-baidu-map'\nproject(':react-native-baidu-map').projectDir = new File(settingsDir, '../node_modules/react-native-baidu-map/android')`\n\n- build.gradle `compile project(':react-native-baidu-map')`\n\n- MainApplication`new BaiduMapPackage(getApplicationContext())`\n- AndroidMainifest.xml `<meta-data\n            android:name=\"com.baidu.lbsapi.API_KEY\" android:value=\"xx\"/>`\n\n#### Xcode\n- Project navigator->Libraries->Add Files to 选择 react-native-baidu-map/ios/RCTBaiduMap.xcodeproj\n- Project navigator->Build Phases->Link Binary With Libraries 加入 libRCTBaiduMap.a\n- Project navigator->Build Settings->Search Paths， Framework search paths 添加 react-native-baidu-map/ios/lib，Header search paths 添加 react-native-baidu-map/ios/RCTBaiduMap\n- 添加依赖, react-native-baidu-map/ios/lib 下的全部 framwordk， CoreLocation.framework和QuartzCore.framework、OpenGLES.framework、SystemConfiguration.framework、CoreGraphics.framework、Security.framework、libsqlite3.0.tbd（xcode7以前为 libsqlite3.0.dylib）、CoreTelephony.framework 、libstdc++.6.0.9.tbd（xcode7以前为libstdc++.6.0.9.dylib）、CoreTelephony.framework\n- 添加 BaiduMapAPI_Map.framework/Resources/mapapi.bundle\n\n- 其它一些注意事项可参考百度地图LBS文档\n\n##### AppDelegate.m init 初始化\n    #import \"RCTBaiduMapViewManager.h\"\n    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions\n    {\n        ...\n        [RCTBaiduMapViewManager initSDK:@\"api key\"];\n        ...\n    }\n  \n### Usage 使用方法\n\n    import { MapView, MapTypes, MapModule, Geolocation } from 'react-native-baidu-map\n\n#### MapView Props 属性\n| Name                    | Type  | Default  | Extra \n| ----------------------- |:-----:| :-------:| -------\n| zoomControlsVisible     | bool  | true     | Android only\n| trafficEnabled          | bool  | false    |\n| baiduHeatMapEnabled     | bool  | false    |\n| mapType                 | number| 1        |\n| zoom                    | number| 10       |\n| center                  | object| null     | {latitude: 0, longitude: 0}\n| marker                  | object| null     | {latitude: 0, longitude: 0, title: ''}\n| markers                 | array | []       | [marker, maker]\n| onMapStatusChangeStart  | func  | undefined| Android only\n| onMapStatusChange       | func  | undefined|\n| onMapStatusChangeFinish | func  | undefined| Android only\n| onMapLoaded             | func  | undefined|\n| onMapClick              | func  | undefined|\n| onMapDoubleClick        | func  | undefined|\n| onMarkerClick           | func  | undefined|\n\n#### MapModule Methods (Deprecated)\n    setMarker(double lat, double lng)\n    setMapType(int mapType)\n    moveToCenter(double lat, double lng, float zoom)\n    Promise reverseGeoCode(double lat, double lng)\n    Promise reverseGeoCodeGPS(double lat, double lng)\n    Promise geocode(String city, String addr),\n    Promise getCurrentPosition()\n      \n#### Geolocation Methods\n\n| Method                    | Result \n| ------------------------- | -------\n| Promise reverseGeoCode(double lat, double lng) | `{\"address\": \"\", \"province\": \"\", \"city\": \"\", \"district\": \"\", \"streetName\": \"\", \"streetNumber\": \"\"}`\n| Promise reverseGeoCodeGPS(double lat, double lng) |  `{\"address\": \"\", \"province\": \"\", \"city\": \"\", \"district\": \"\", \"streetName\": \"\", \"streetNumber\": \"\"}`\n| Promise geocode(String city, String addr) | {\"latitude\": 0.0, \"longitude\": 0.0}\n| Promise getCurrentPosition() | IOS: `{\"latitude\": 0.0, \"longitude\": 0.0}` Android: `{\"latitude\": 0.0, \"longitude\": 0.0, \"direction\": -1, \"altitude\": 0.0, \"radius\": 0.0, \"address\": \"\", \"countryCode\": \"\", \"country\": \"\", \"province\": \"\", \"cityCode\": \"\", \"city\": \"\", \"district\": \"\", \"street\": \"\", \"streetNumber\": \"\", \"buildingId\": \"\", \"buildingName\": \"\"}`\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luojuan822/rn-pocket-baidu-map.git"
   },
-  "homepage": "https://github.com/luojuan822/rn-pocket-baidu-map#readme"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
 }

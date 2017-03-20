@@ -13,6 +13,8 @@ import React, {
 
 const _module = NativeModules.BaiduGeolocationModule;
 
+console.log("Native BaiduGeolocationModule ++++", _module)
+
 export default {
   geocode(city, addr) {
     return new Promise((resolve, reject) => {
@@ -41,6 +43,20 @@ export default {
         resolve(resp);
       });
     });
+  },
+  walkSearch(startName, lat, lng, endName, endlat, endlng) {
+      return new Promise((resolve, reject) => {
+          try {
+              _module.walkSearch(startName, lat, lng, endName, endlat, endlng);
+          }
+          catch (e) {
+              reject(e);
+              return;
+          }
+          DeviceEventEmitter.once('onGetWalkSearchResult', resp => {
+              resolve(resp);
+          });
+      });
   },
   reverseGeoCodeGPS(lat, lng) {
     return new Promise((resolve, reject) => {

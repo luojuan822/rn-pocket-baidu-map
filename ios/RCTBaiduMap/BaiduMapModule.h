@@ -12,6 +12,9 @@
 #import "BaseModule.h"
 
 #import "RCTBaiduMapViewManager.h"
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
+#import <BaiduMapAPI_Search/BMKRouteSearchType.h>
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>
 
 @interface BaiduMapModule : BaseModule <BMKMapViewDelegate>
 

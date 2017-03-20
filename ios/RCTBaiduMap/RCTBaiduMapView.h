@@ -16,8 +16,10 @@
 #import <BaiduMapAPI_Map/BMKPinAnnotationView.h>
 #import <BaiduMapAPI_Map/BMKPointAnnotation.h>
 #import <UIKit/UIKit.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
 
-@interface RCTBaiduMapView : BMKMapView <BMKMapViewDelegate>
+@interface RCTBaiduMapView : BMKMapView
 
 @property (nonatomic, copy) RCTBubblingEventBlock onChange;
 

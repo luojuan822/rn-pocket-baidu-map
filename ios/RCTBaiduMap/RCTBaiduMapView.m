@@ -9,10 +9,15 @@
 #import "RCTBaiduMapView.h"
 
 @implementation RCTBaiduMapView {
-    BMKMapView* _mapView;
     MyAnnotation* _annotation;
     NSMutableArray* _someoneAnnotations;
     NSMutableArray* _nooneAnnotations;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    return self;
 }
 
 -(void)setZoom:(float)zoom {
