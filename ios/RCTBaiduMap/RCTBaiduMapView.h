@@ -26,6 +26,7 @@
 -(void)setZoom:(float)zoom;
 -(void)setCenterLatLng:(NSDictionary *)LatLngObj;
 -(void)setMarker:(NSDictionary *)Options;
+-(void)setSelectedMarker:(NSDictionary *)option;
 
 @end
 
@@ -39,4 +40,6 @@
 @interface MyAnnotation : BMKPointAnnotation
 @end
 
+@interface SelectedAnnotation : BMKPointAnnotation
+@end
 #endif

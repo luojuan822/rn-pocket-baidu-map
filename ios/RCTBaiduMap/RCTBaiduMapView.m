@@ -10,6 +10,7 @@
 
 @implementation RCTBaiduMapView {
     MyAnnotation* _annotation;
+    SelectedAnnotation* _selectedAnnotation;
     NSMutableArray* _someoneAnnotations;
     NSMutableArray* _nooneAnnotations;
 }
@@ -40,6 +41,19 @@
         }
         else {
             [self updateMarker:_annotation option:option];
+        }
+    }
+}
+
+-(void)setSelectedMarker:(NSDictionary *)option {
+    NSLog(@"setSelectedMarker");
+    if(option != nil) {
+        if(_selectedAnnotation == nil) {
+            _selectedAnnotation = [[SelectedAnnotation alloc]init];
+            [self addMarker:_selectedAnnotation option:option];
+        }
+        else {
+            [self updateMarker:_selectedAnnotation option:option];
         }
     }
 }
@@ -167,4 +181,6 @@
 @implementation NoOneAnnotation
 @end
 @implementation MyAnnotation
+@end
+@implementation SelectedAnnotation
 @end

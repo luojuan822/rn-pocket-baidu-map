@@ -1,13 +1,17 @@
 package org.lovebing.reactnative.baidumap;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
@@ -19,6 +23,22 @@ import com.baidu.mapapi.map.MapViewLayoutParams;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.Text;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.overlayutil.DrivingRouteOverlay;
+import com.baidu.mapapi.overlayutil.MassTransitRouteOverlay;
+import com.baidu.mapapi.overlayutil.OverlayManager;
+import com.baidu.mapapi.overlayutil.WalkingRouteOverlay;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.route.BikingRouteResult;
+import com.baidu.mapapi.search.route.DrivingRouteLine;
+import com.baidu.mapapi.search.route.DrivingRouteResult;
+import com.baidu.mapapi.search.route.IndoorRouteResult;
+import com.baidu.mapapi.search.route.MassTransitRouteLine;
+import com.baidu.mapapi.search.route.MassTransitRouteResult;
+import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
+import com.baidu.mapapi.search.route.RoutePlanSearch;
+import com.baidu.mapapi.search.route.TransitRouteResult;
+import com.baidu.mapapi.search.route.WalkingRouteLine;
+import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
@@ -34,23 +54,35 @@ import java.util.List;
 /**
  * Created by lovebing on 12/20/2015.
  */
-public class BaiduMapViewManager extends ViewGroupManager<MapView> {
+public class BaiduMapViewManager extends ViewGroupManager<MapView> implements OnGetRoutePlanResultListener {
 
     private static final String REACT_CLASS = "RCTBaiduMapView";
 
-//    private  MapView mMapView;
     private ThemedReactContext mReactContext;
 
     private ReadableArray childrenPoints;
-//    private Marker mMarker;
-//    private List<Marker> someoneMarkers = new ArrayList<>();
-//    private List<Marker> nooneMarkers = new ArrayList<>();
-//    private TextView mMarkerText;
+
+    private WalkingRouteLine walkingRouteLine;
+    private DrivingRouteLine drivingRouteLine;
+    private MassTransitRouteLine busRouteLine;
+
+    private MapView _mapView;
+    private RoutePlanSearch _search;
+    private OverlayManager routeOverlay;
 
     public String getName() {
         return REACT_CLASS;
     }
 
+//    public static  BaiduMapViewManager getInstance() {
+//        if(instance == null) {
+//            synchronized (BaiduMapViewManager.class) {
+//                if(instance == null)
+//                    instance = new BaiduMapViewManager();
+//            }
+//        }
+//        return instance;
+//    }
 
     public void initSDK(Context context) {
         SDKInitializer.initialize(context);
@@ -61,12 +93,13 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
 //        if(mMapView != null) {
 //            mMapView.onDestroy();
 //        }
-        MapView mMapView =  new MapView(context);
 
-        setListeners(mMapView);
-        mMapView.getMap().showMapPoi(true);
-
-        return mMapView;
+        MapView mapView = new MapView(context);
+        setListeners(mapView);
+        mapView.getMap().showMapPoi(true);
+        _mapView = mapView;
+        System.out.println("createViewInstance=====" + mapView);
+        return mapView;
     }
 
     @Override
@@ -142,7 +175,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
 
     @ReactProp(name="someoneMarkers")
     public void setSomeoneMarkers(MapView mapView, ReadableArray options) {
-        System.out.println("someoneMarkers===========");
+        System.out.println("someoneMarkers===========" + mapView);
 //        System.out.println(someoneMarkers.size());
 //
 //        for (int i=0; i < someoneMarkers.size(); i++) {
@@ -173,7 +206,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
 
     @ReactProp(name="nooneMarkers")
     public void setNooneMarkers(MapView mapView, ReadableArray options) {
-        System.out.println("someoneMarkers===========");
+        System.out.println("someoneMarkers===========" + mapView);
 //        System.out.println(nooneMarkers.size());
 //
 //        for (int i=0; i < nooneMarkers.size(); i++) {
@@ -197,10 +230,9 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
 
     /**
      *
-     * @param mapView
      */
-    private void setListeners(final MapView mapView) {
-        BaiduMap map = mapView.getMap();
+    private void setListeners(final MapView _mapView) {
+        BaiduMap map = _mapView.getMap();
         map.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
 
             private WritableMap getEventParams(MapStatus mapStatus) {
@@ -217,19 +249,19 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
             @Override
             public void onMapStatusChangeStart(MapStatus mapStatus) {
                 System.out.println("onMapStatusChangeStart=============");
-                sendEvent(mapView, "onMapStatusChangeStart", getEventParams(mapStatus));
+                sendEvent(_mapView, "onMapStatusChangeStart", getEventParams(mapStatus));
             }
 
             @Override
             public void onMapStatusChange(MapStatus mapStatus) {
                 System.out.println("onMapStatusChange=============");
-                sendEvent(mapView, "onMapStatusChange", getEventParams(mapStatus));
+                sendEvent(_mapView, "onMapStatusChange", getEventParams(mapStatus));
             }
 
             @Override
             public void onMapStatusChangeFinish(MapStatus mapStatus) {
                 System.out.println("onMapStatusChangeFinish=============");
-                sendEvent(mapView, "onMapStatusChangeFinish", getEventParams(mapStatus));
+                sendEvent(_mapView, "onMapStatusChangeFinish", getEventParams(mapStatus));
             }
         });
 
@@ -244,11 +276,11 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
             @Override
             public void onMapClick(LatLng latLng) {
                 System.out.println("onMapClick=============");
-                mapView.getMap().hideInfoWindow();
+                _mapView.getMap().hideInfoWindow();
                 WritableMap writableMap = Arguments.createMap();
                 writableMap.putDouble("latitude", latLng.latitude);
                 writableMap.putDouble("longitude", latLng.longitude);
-                sendEvent(mapView, "onMapClick", writableMap);
+                sendEvent(_mapView, "onMapClick", writableMap);
             }
 
             @Override
@@ -264,7 +296,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
                 WritableMap writableMap = Arguments.createMap();
                 writableMap.putDouble("latitude", latLng.latitude);
                 writableMap.putDouble("longitude", latLng.longitude);
-                sendEvent(mapView, "onMapDoubleClick", writableMap);
+                sendEvent(_mapView, "onMapDoubleClick", writableMap);
             }
         });
 
@@ -290,7 +322,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
             public boolean onMarkerClick(final Marker marker) {
                 System.out.println("onMarkerClick=============");
                 if(marker != null && marker.getTitle() != null && marker.getTitle().length() > 0) {
-                    TextView mMarkerText = new TextView(mapView.getContext());
+                    TextView mMarkerText = new TextView(_mapView.getContext());
                     mMarkerText.setBackgroundResource(R.drawable.popup);
                     mMarkerText.setPadding(32, 32, 32, 32);
                     mMarkerText.setText(marker.getTitle());
@@ -306,14 +338,14 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
                             position.putDouble("longitude", marker.getPosition().longitude);
                             writableMap.putMap("position", position);
                             writableMap.putString("title", marker.getTitle());
-                            sendEvent(mapView, "onAnnotationClick", writableMap);
+                            sendEvent(_mapView, "onAnnotationClick", writableMap);
                         }
                     };
                     InfoWindow infoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(mMarkerText),
                             marker.getPosition(), -80, listener);
-                    mapView.getMap().showInfoWindow(infoWindow);
+                    _mapView.getMap().showInfoWindow(infoWindow);
                 } else {
-                    mapView.getMap().hideInfoWindow();
+                    _mapView.getMap().hideInfoWindow();
                 }
 //                WritableMap writableMap = Arguments.createMap();
 //                WritableMap position = Arguments.createMap();
@@ -333,6 +365,8 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
      * @param params
      */
     private void sendEvent(MapView mMapView, String eventName, @Nullable WritableMap params) {
+        System.out.println("sendEvent==========" + mMapView);
+        System.out.println("sendEvent==========" + mReactContext);
         WritableMap event = Arguments.createMap();
         event.putMap("params", params);
         event.putString("type", eventName);
@@ -343,6 +377,132 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
                         event);
     }
 
+    @Override
+    public void onGetWalkingRouteResult(WalkingRouteResult result) {
+        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+            return;
+        }
+        if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
+            // 起终点或途经点地址有岐义，通过以下接口获取建议查询信息
+            // result.getSuggestAddrInfo()
+            return;
+        }
+        if (result.error == SearchResult.ERRORNO.NO_ERROR && result.getRouteLines().size() > 0) {
+            walkingRouteLine = result.getRouteLines().get(0);
+            WritableMap writableMap = Arguments.createMap();
+            writableMap.putInt("time", walkingRouteLine.getDuration()/60);
+            sendEvent(_mapView, "onWalkingRouteResult", writableMap);
+        }
+
+    }
+
+    @Override
+    public void onGetTransitRouteResult(TransitRouteResult transitRouteResult) {
+    }
+
+    @Override
+    public void onGetMassTransitRouteResult(MassTransitRouteResult result) {
+        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+            return;
+        }
+        if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
+            // 起终点模糊，获取建议列表
+            //result.getSuggestAddrInfo();
+            return;
+        }
+        if (result.error == SearchResult.ERRORNO.NO_ERROR && result.getRouteLines().size() > 0) {
+            busRouteLine = result.getRouteLines().get(0);
+
+            WritableMap writableMap = Arguments.createMap();
+            writableMap.putInt("time", busRouteLine.getDuration()/60);
+            sendEvent(_mapView, "onMassTransitRouteResult", writableMap);
+        }
+    }
+
+    @Override
+    public void onGetDrivingRouteResult(DrivingRouteResult result) {
+        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+            return;
+        }
+        if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
+            // 起终点或途经点地址有岐义，通过以下接口获取建议查询信息
+            // result.getSuggestAddrInfo()
+            return;
+        }
+        if (result.error == SearchResult.ERRORNO.NO_ERROR && result.getRouteLines().size() > 0) {
+            drivingRouteLine = result.getRouteLines().get(0);
+
+            WritableMap writableMap = Arguments.createMap();
+            writableMap.putInt("time", drivingRouteLine.getDuration()/60);
+            sendEvent(_mapView, "onDrivingRouteResult", writableMap);
+        }
+    }
+
+    @Override
+    public void onGetIndoorRouteResult(IndoorRouteResult indoorRouteResult) {
+    }
+
+    @Override
+    public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
+    }
+
+    public RoutePlanSearch getRoutePlanSearch() {
+        if(_search == null) {
+            synchronized (BaiduMapViewManager.class) {
+                if(_search == null) {
+                    _search = RoutePlanSearch.newInstance();
+                    _search.setOnGetRoutePlanResultListener(this);
+                }
+            }
+        }
+        return _search;
+    }
+
+    public void drawWalking() {
+        if(routeOverlay != null) {
+            routeOverlay.removeFromMap();
+        }
+        BaiduMap baiduMap = _mapView.getMap();
+        WalkingRouteOverlay overlay = new MyWalkingRouteOverlay(baiduMap);
+        baiduMap.setOnMarkerClickListener(overlay);
+        routeOverlay = overlay;
+        overlay.setData(walkingRouteLine);
+        overlay.addToMap();
+        overlay.zoomToSpan();
+    }
+
+    public void drawBus() {
+        if(routeOverlay != null) {
+            routeOverlay.removeFromMap();
+        }
+        BaiduMap baiduMap = _mapView.getMap();
+        MyMassTransitRouteOverlay overlay = new MyMassTransitRouteOverlay(baiduMap);
+        baiduMap.setOnMarkerClickListener(overlay);
+        routeOverlay = overlay;
+
+        overlay.setData( busRouteLine );
+        // 同城
+        overlay.setSameCity(true);
+
+        overlay.addToMap();
+        overlay.zoomToSpan();
+    }
+
+    public void drawDriving() {
+        if(routeOverlay != null) {
+            routeOverlay.removeFromMap();
+        }
+        BaiduMap baiduMap = _mapView.getMap();
+        DrivingRouteOverlay overlay = new MyDrivingRouteOverlay(baiduMap);
+        routeOverlay = overlay;
+
+        baiduMap.setOnMarkerClickListener(overlay);
+        overlay.setData(drivingRouteLine);
+
+        overlay.addToMap();
+        overlay.zoomToSpan();
+    }
+
 
     /**
      *
@@ -351,4 +511,71 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
 //    public static MapView getMapView() {
 //        return mMapView;
 //    }
+
+    // 定制RouteOverly
+    private class MyDrivingRouteOverlay extends DrivingRouteOverlay {
+
+        public MyDrivingRouteOverlay(BaiduMap baiduMap) {
+            super(baiduMap);
+        }
+
+        @Override
+        public BitmapDescriptor getStartMarker() {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.icon_st);
+        }
+
+        @Override
+        public BitmapDescriptor getTerminalMarker() {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.icon_en);
+        }
+
+        @Override
+        public int getLineColor() {
+            return Color.argb(200, 248, 70, 191);
+        }
+    }
+
+    private class MyWalkingRouteOverlay extends WalkingRouteOverlay {
+
+        public MyWalkingRouteOverlay(BaiduMap baiduMap) {
+            super(baiduMap);
+        }
+
+        @Override
+        public BitmapDescriptor getStartMarker() {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.icon_st);
+        }
+
+        @Override
+        public BitmapDescriptor getTerminalMarker() {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.icon_en);
+        }
+        @Override
+        public int getLineColor() {
+            return Color.argb(200, 248, 70, 191);
+        }
+    }
+
+    private class MyMassTransitRouteOverlay extends MassTransitRouteOverlay {
+        public  MyMassTransitRouteOverlay(BaiduMap baiduMap) {
+            super(baiduMap);
+        }
+
+        @Override
+        public BitmapDescriptor getStartMarker() {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.icon_st);
+        }
+
+        @Override
+        public BitmapDescriptor getTerminalMarker() {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.icon_en);
+        }
+        @Override
+        public int getLineColor() {
+            return Color.argb(200, 248, 70, 191);
+        }
+
+    }
 }
+
+

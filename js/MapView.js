@@ -24,6 +24,7 @@ export default class MapView extends Component {
     zoom: PropTypes.number,
     center: PropTypes.object,
     marker: PropTypes.object,
+    selectedMarker: PropTypes.object,
     someoneMarkers: PropTypes.array,
     nooneMarkers: PropTypes.array,
     childrenPoints: PropTypes.array,

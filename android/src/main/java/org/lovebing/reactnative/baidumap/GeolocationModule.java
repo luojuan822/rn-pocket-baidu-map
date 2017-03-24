@@ -158,4 +158,9 @@ public class GeolocationModule extends BaseModule
         }
         sendEvent("onGetReverseGeoCodeResult", params);
     }
+
+    @Override
+    public void onConnectHotSpotMessage(String s, int i) {
+
+    }
 }

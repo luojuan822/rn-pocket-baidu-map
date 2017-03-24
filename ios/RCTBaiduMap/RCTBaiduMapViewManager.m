@@ -18,6 +18,8 @@ BMKDrivingRouteLine* _drivingLine;
 BMKWalkingRouteLine* _walkingLine;
 BMKMassTransitRouteLine* _transiteLine;
 
+BMKAnnotationView* selectedView;
+
 @implementation RCTBaiduMapViewManager {
     RCTBaiduMapView* _mapView;
     BMKRouteSearch* _routeSearch;
@@ -32,6 +34,7 @@ RCT_EXPORT_VIEW_PROPERTY(zoom, float)
 RCT_EXPORT_VIEW_PROPERTY(trafficEnabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(baiduHeatMapEnabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(marker, NSDictionary*)
+RCT_EXPORT_VIEW_PROPERTY(selectedMarker, NSDictionary*)
 RCT_EXPORT_VIEW_PROPERTY(someoneMarkers, NSArray*)
 RCT_EXPORT_VIEW_PROPERTY(nooneMarkers, NSArray*)
 
@@ -121,6 +124,11 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
 
 -(void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view {
     NSLog(@"didSelectAnnotationView");
+    if(selectedView != nil) {
+        selectedView.image = [UIImage imageNamed:@"baidu_one"];
+    }
+    view.image = [UIImage imageNamed:@"baidu_selected"];
+    selectedView = view;
     NSDictionary* event = @{
                             @"type": @"onMarkerClick",
                             @"params": @{
@@ -153,25 +161,34 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
     NSLog(@"viewForAnnotation====== %@", annotation);
     if ([annotation isKindOfClass:[MyAnnotation class]]) {
         BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"myAnnotation"];
-        newAnnotationView.pinColor = BMKPinAnnotationColorGreen;
+        //newAnnotationView.pinColor = BMKPinAnnotationColorGreen;
         newAnnotationView.animatesDrop = YES;
         newAnnotationView.image = [UIImage imageNamed:@"baidu_my"];
         return newAnnotationView;
     } else if([annotation isKindOfClass:[SomeOneAnnotation class]]){
         BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"someoneAnnotation"];
-        newAnnotationView.pinColor = BMKPinAnnotationColorRed;
+        //newAnnotationView.pinColor = BMKPinAnnotationColorRed;
         newAnnotationView.animatesDrop = YES;
-        newAnnotationView.image = [UIImage imageNamed:@"baidu_someone"];
+        newAnnotationView.image = [UIImage imageNamed:@"baidu_one"];
         return newAnnotationView;
     } else if([annotation isKindOfClass:[RouteAnnotation class]]) {
         BMKAnnotationView* view = [(RouteAnnotation*)annotation getRouteAnnotationView:mapView];
         NSLog(@"BMKAnnotationView====== %@", view);
         return view;
-    } else {
-        BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nooneAnnotation"];
-        newAnnotationView.pinColor = BMKPinAnnotationColorRed;
+    } else if([annotation isKindOfClass:[SelectedAnnotation class]]) {
+        BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"selectedAnnotation"];
+        //newAnnotationView.pinColor = BMKPinAnnotationColorRed;
         newAnnotationView.animatesDrop = YES;
-        newAnnotationView.image = [UIImage imageNamed:@"baidu_noone"];
+        newAnnotationView.image = [UIImage imageNamed:@"baidu_selected"];
+        selectedView = newAnnotationView;
+        newAnnotationView.selected = YES;
+        //[_smapView mapForceRefresh];
+        return newAnnotationView;
+    }else {
+        BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"nooneAnnotation"];
+        //newAnnotationView.pinColor = BMKPinAnnotationColorRed;
+        newAnnotationView.animatesDrop = YES;
+        newAnnotationView.image = [UIImage imageNamed:@"baidu_one"];
         return newAnnotationView;
     }
     return nil;
@@ -181,8 +198,8 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
 {
     if ([overlay isKindOfClass:[BMKPolyline class]]) {
         BMKPolylineView* polylineView = [[BMKPolylineView alloc] initWithOverlay:overlay];
-        polylineView.fillColor = [[UIColor alloc] initWithRed:248/255.0 green:70/255.0 blue:191/255.0 alpha:0.8];
-        polylineView.strokeColor = [[UIColor alloc] initWithRed:248/255.0 green:70/255.0 blue:191/255.0 alpha:0.8];
+        polylineView.fillColor = [[UIColor alloc] initWithRed:248/255.0 green:70/255.0 blue:191/255.0 alpha:0.7];
+        polylineView.strokeColor = [[UIColor alloc] initWithRed:248/255.0 green:70/255.0 blue:191/255.0 alpha:0.7];
         polylineView.lineWidth = 3.0;
         return polylineView;
     }

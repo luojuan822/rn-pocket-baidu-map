@@ -12,6 +12,10 @@ import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
+import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
+import com.baidu.mapapi.search.route.MassTransitRoutePlanOption;
+import com.baidu.mapapi.search.route.PlanNode;
+import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -47,10 +51,12 @@ public class BaiduMapModule extends BaseModule {
 
 
     private Marker marker;
+    BaiduMapViewManager baiduMapViewManager;
 
-    public BaiduMapModule(ReactApplicationContext reactContext) {
+    public BaiduMapModule(ReactApplicationContext reactContext, BaiduMapViewManager viewManager) {
         super(reactContext);
         context = reactContext;
+        baiduMapViewManager = viewManager;
     }
 
     public String getName() {
@@ -98,6 +104,40 @@ public class BaiduMapModule extends BaseModule {
     @ReactMethod
     public void setMapType(int mapType) {
 //        getMap().setMapType(mapType);
+    }
+
+    @ReactMethod
+    public void walkSearch(String startName, double lat, double lng, String endName, double endlat, double endlng) {
+        PlanNode start = PlanNode.withLocation(new LatLng(lat, lng));
+        PlanNode end = PlanNode.withLocation(new LatLng(endlat, endlng));
+        baiduMapViewManager.getRoutePlanSearch().walkingSearch(new WalkingRoutePlanOption().from(start).to(end));
+    }
+
+    @ReactMethod
+    public void driveSearch(String startName, double lat, double lng, String endName, double endlat, double endlng) {
+        PlanNode start = PlanNode.withLocation(new LatLng(lat, lng));
+        PlanNode end = PlanNode.withLocation(new LatLng(endlat, endlng));
+        baiduMapViewManager.getRoutePlanSearch().drivingSearch(new DrivingRoutePlanOption().from(start).to(end));
+    }
+
+    @ReactMethod
+    public void busSearch(String startName, double lat, double lng, String endName, double endlat, double endlng) {
+        PlanNode start = PlanNode.withLocation(new LatLng(lat, lng));
+        PlanNode end = PlanNode.withLocation(new LatLng(endlat, endlng));
+        baiduMapViewManager.getRoutePlanSearch().masstransitSearch(new MassTransitRoutePlanOption().from(start).to(end));
+    }
+
+    @ReactMethod
+    public void drawDriving() {
+        baiduMapViewManager.drawDriving();
+    }
+    @ReactMethod
+    public void drawBus() {
+        baiduMapViewManager.drawBus();
+    }
+    @ReactMethod
+    public void drawWalking() {
+        baiduMapViewManager.drawWalking();
     }
 
     /**
